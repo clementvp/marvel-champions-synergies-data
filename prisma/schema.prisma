@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PackType {
+  code         String   @id @unique
+  name         String   
+  packs        Pack[]
+}
+
+model Pack {
+  code         String   @id @unique
+  date_release String
+  name         String   
+  position     Int
+  size         Int
+
+  type         PackType @relation(fields: [type_code], references: [code], onDelete: Cascade )
+  type_code    String
+
+  cards Card[]
+
+}
+
+model Faction {
+  code String @id @unique
+  name String
+  cards Card[]
+}
+
+model Type {
+  code String @id @unique
+  name String
+  cards Card[]
+}
+
+model Trait {
+  code String @id @unique
+  name String
+  cards TraitsOnCards[]
+}
+
+model SetType {
+  code String @id @unique
+  name String
+  sets Set[]
+}
+
+model Set {
+  code String @id @unique
+  name String
+
+  type SetType @relation(fields: [type_code], references: [code] , onDelete: Cascade)
+  type_code String
+
+  cards Card[]
+}
+
+model TraitsOnCards {
+  trait       Trait     @relation(fields: [trait_code], references: [code], onDelete: Cascade)
+  trait_code  String 
+
+  card      Card @relation(fields: [card_code], references: [code], onDelete: Cascade)
+  card_code String
+  
+  @@id([trait_code, card_code])
+}
+
+model Card {
+  code     String @id @unique
+  name     String
+  quantity Int
+  back_link String?
+  deck_limit Int?
+  defense Int?
+  flavor String?
+  hand_size Int?
+  health Int?
+  illustrator String?
+  is_unique Boolean?
+  position Int?
+  text String?
+  thwart Int?
+  hidden Boolean?
+  recover Int?
+  attack_cost Int?
+  cost String?
+  resource_wild Int?
+  set_position Int?
+  subname String?
+  thwart_cost Int?
+  resource_energy Int?
+  resource_physical Int?
+  resource_mental Int?
+  boost Int?
+  base_threat Int?
+  attack_text String?
+  boost_text String?
+  scheme_text String?
+  scheme_acceleration Int?
+  health_per_hero Boolean?
+  stage Int?
+  back_flavor String?
+  back_text String?
+  double_sided Boolean?
+  escalation_threat Int?
+  scheme_crisis Int?
+  threat Int?
+  scheme_hazard Int?
+  scheme_boost Int?
+  scheme_amplify Int?
+  escalation_threat_fixed Boolean?
+  back_name String?
+  permanent Boolean?
+  thwart_text String?
+  back_traits String?
+  spoiler Int?
+  threat_fixed Boolean?
+
+  type        Type @relation(fields: [type_code], references: [code], onDelete: Cascade)
+  type_code   String
+
+  pack        Pack @relation(fields: [pack_code], references: [code], onDelete: Cascade)
+  pack_code   String
+
+  set        Set? @relation(fields: [set_code], references: [code], onDelete: Cascade)
+  set_code   String?
+
+  faction        Faction @relation(fields: [faction_code], references: [code], onDelete: Cascade)
+  faction_code   String
+
+  traits TraitsOnCards[]
+
+  duplicatedOfId String?
+  duplicatedOf   Card?   @relation("duplicate", fields: [duplicatedOfId], references: [code])
+  duplicatedBy   Card[]  @relation("duplicate")
+
+  linkedTo         Card[] @relation("linkedTo")
+  linkedToRelation Card[] @relation("linkedTo")
+}

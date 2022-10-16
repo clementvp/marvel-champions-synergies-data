@@ -2,22 +2,34 @@
   "name": "marvel-champions-synergies",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "start": "ts-node src/index.ts"
+    "build": "rimraf ./build && tsc",
+    "dev": "nodemon src/index.ts",
+    "start": "npm run build && node build/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.11.0"
+    "@prisma/client": "^4.4.0",
+    "@types/node": "^18.11.0",
+    "directory-tree": "^3.3.1",
+    "dotenv": "^16.0.2",
+    "jsonfile": "^6.1.0",
+    "nodejs-file-downloader": "^4.10.2",
+    "nodemon": "^2.0.20"
   },
   "devDependencies": {
+    "@types/jsonfile": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "eslint": "^8.25.0",
     "prettier": "2.7.1",
+    "prisma": "^4.4.0",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.9.1"
   }
 }
