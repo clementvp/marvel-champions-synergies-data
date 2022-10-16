@@ -61,10 +61,11 @@ CREATE TABLE "Set" (
 
 -- CreateTable
 CREATE TABLE "TraitsOnCards" (
-    "trait_code" TEXT NOT NULL,
-    "card_code" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
+    "trait_code" TEXT,
+    "card_code" TEXT,
 
-    CONSTRAINT "TraitsOnCards_pkey" PRIMARY KEY ("trait_code","card_code")
+    CONSTRAINT "TraitsOnCards_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -118,10 +119,10 @@ CREATE TABLE "Card" (
     "back_traits" TEXT,
     "spoiler" INTEGER,
     "threat_fixed" BOOLEAN,
-    "type_code" TEXT NOT NULL,
-    "pack_code" TEXT NOT NULL,
+    "type_code" TEXT,
+    "pack_code" TEXT,
     "set_code" TEXT,
-    "faction_code" TEXT NOT NULL,
+    "faction_code" TEXT,
     "duplicatedOfId" TEXT,
 
     CONSTRAINT "Card_pkey" PRIMARY KEY ("code")
@@ -170,22 +171,22 @@ ALTER TABLE "Pack" ADD CONSTRAINT "Pack_type_code_fkey" FOREIGN KEY ("type_code"
 ALTER TABLE "Set" ADD CONSTRAINT "Set_type_code_fkey" FOREIGN KEY ("type_code") REFERENCES "SetType"("code") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TraitsOnCards" ADD CONSTRAINT "TraitsOnCards_trait_code_fkey" FOREIGN KEY ("trait_code") REFERENCES "Trait"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TraitsOnCards" ADD CONSTRAINT "TraitsOnCards_trait_code_fkey" FOREIGN KEY ("trait_code") REFERENCES "Trait"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TraitsOnCards" ADD CONSTRAINT "TraitsOnCards_card_code_fkey" FOREIGN KEY ("card_code") REFERENCES "Card"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TraitsOnCards" ADD CONSTRAINT "TraitsOnCards_card_code_fkey" FOREIGN KEY ("card_code") REFERENCES "Card"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Card" ADD CONSTRAINT "Card_type_code_fkey" FOREIGN KEY ("type_code") REFERENCES "Type"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Card" ADD CONSTRAINT "Card_type_code_fkey" FOREIGN KEY ("type_code") REFERENCES "Type"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Card" ADD CONSTRAINT "Card_pack_code_fkey" FOREIGN KEY ("pack_code") REFERENCES "Pack"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Card" ADD CONSTRAINT "Card_pack_code_fkey" FOREIGN KEY ("pack_code") REFERENCES "Pack"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Card" ADD CONSTRAINT "Card_set_code_fkey" FOREIGN KEY ("set_code") REFERENCES "Set"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Card" ADD CONSTRAINT "Card_set_code_fkey" FOREIGN KEY ("set_code") REFERENCES "Set"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Card" ADD CONSTRAINT "Card_faction_code_fkey" FOREIGN KEY ("faction_code") REFERENCES "Faction"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Card" ADD CONSTRAINT "Card_faction_code_fkey" FOREIGN KEY ("faction_code") REFERENCES "Faction"("code") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Card" ADD CONSTRAINT "Card_duplicatedOfId_fkey" FOREIGN KEY ("duplicatedOfId") REFERENCES "Card"("code") ON DELETE SET NULL ON UPDATE CASCADE;

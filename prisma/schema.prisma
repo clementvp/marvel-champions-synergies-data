@@ -65,13 +65,12 @@ model Set {
 }
 
 model TraitsOnCards {
-  trait       Trait     @relation(fields: [trait_code], references: [code], onDelete: Cascade)
-  trait_code  String 
+  id          String   @id @default(uuid())
+  trait       Trait?   @relation(fields: [trait_code], references: [code])
+  trait_code  String? 
 
-  card      Card @relation(fields: [card_code], references: [code], onDelete: Cascade)
-  card_code String
-  
-  @@id([trait_code, card_code])
+  card      Card? @relation(fields: [card_code], references: [code])
+  card_code String?
 }
 
 model Card {
@@ -125,17 +124,17 @@ model Card {
   spoiler Int?
   threat_fixed Boolean?
 
-  type        Type @relation(fields: [type_code], references: [code], onDelete: Cascade)
-  type_code   String
+  type        Type? @relation(fields: [type_code], references: [code])
+  type_code   String?
 
-  pack        Pack @relation(fields: [pack_code], references: [code], onDelete: Cascade)
-  pack_code   String
+  pack        Pack? @relation(fields: [pack_code], references: [code])
+  pack_code   String?
 
-  set        Set? @relation(fields: [set_code], references: [code], onDelete: Cascade)
+  set        Set? @relation(fields: [set_code], references: [code])
   set_code   String?
 
-  faction        Faction @relation(fields: [faction_code], references: [code], onDelete: Cascade)
-  faction_code   String
+  faction        Faction? @relation(fields: [faction_code], references: [code])
+  faction_code   String?
 
   traits TraitsOnCards[]
 
