@@ -3,7 +3,7 @@ const createAllSets = (allSets, db) => {
     const data = {
       code: set.code,
       name: set.name,
-      type_code: set.type_code,
+      type_code: set.card_set_type_code,
     };
 
     return db.set.create({

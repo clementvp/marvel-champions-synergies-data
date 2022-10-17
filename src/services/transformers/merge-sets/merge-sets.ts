@@ -6,17 +6,13 @@ const mergeSets = () => {
 
   const mergedSets = originalSets.map((originalSet) => {
     const set = {
-      code: originalSet.code,
-      name: "",
-      type_code: originalSet.card_set_type_code,
+      ...originalSet,
     };
     const tradSet = tradSets.find(
       (tradSet) => tradSet.code === originalSet.code
     );
     if (tradSet) {
       set.name = tradSet.name;
-    } else {
-      set.name = originalSet.name;
     }
     return set;
   });

@@ -21,9 +21,13 @@ const mergePackTypes = () => {
     return type;
   });
 
-  jsonfile.writeFileSync(`./data/types/${lang}_types.json`, mergedTypes, {
-    spaces: 2,
-  });
+  jsonfile.writeFileSync(
+    `./data/pack-types/${lang}_packtypes.json`,
+    mergedTypes,
+    {
+      spaces: 2,
+    }
+  );
 };
 
 export default mergePackTypes;
