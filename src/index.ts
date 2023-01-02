@@ -7,6 +7,7 @@ import {
   downloadAllfactions,
   downloadAllTranslationFactions,
 } from "./services/downloaders/factions/all-factions";
+import { downloadAllcardImages } from "./services/downloaders/images/images";
 import {
   downloadAllPackTypes,
   downloadAllTranslationPackTypes,
@@ -26,6 +27,7 @@ import {
   downloadAllSets,
   downloadAllTranslationSets,
 } from "./services/downloaders/sets/all-sets";
+
 import { extractTraits } from "./services/extractors/traits/traits";
 import { enrichLinkedCards } from "./services/transformers/enrich-linked-cards/enrich-linked-cards";
 import mergeCardTypes from "./services/transformers/merge-card-types/merge-card-types";
@@ -158,5 +160,11 @@ const init = async () => {
   splitCardTraits();
 
   extractTraits();
+
+  try {
+    await downloadAllcardImages();
+  } catch (error) {
+    console.log(error);
+  }
 };
 init();
