@@ -10,6 +10,6 @@
     "outDir": "./build",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "db"],
+  "include": ["src/**/*", "src/db"],
   "exclude": ["node_modules"]
 }

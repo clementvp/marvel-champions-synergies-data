@@ -1,15 +1,15 @@
 import dotenv from "dotenv";
-import createAllPackTypes from "../db/create-all-pack-types";
-import createAllPacks from "../db/create-all-packs";
-import createAllFactions from "../db/create-all-factions";
-import createAllSetTypes from "../db/create-all-set-types";
-import createAllSets from "../db/create-all-sets";
-import createAllTraits from "../db/create-all-traits";
-import createAllCards from "../db/create-all-cards";
-import createAllTypes from "../db/create-all-types";
-import createAllTraitsOnCards from "../db/create-all-traits-on-cards";
-import createDuplicatedCards from "../db/create-duplicated-cards";
-import createAllLinkedCards from "../db/create-all-linked-cards";
+import createAllPackTypes from "../src/db/create-all-pack-types";
+import createAllPacks from "../src/db/create-all-packs";
+import createAllFactions from "../src/db/create-all-factions";
+import createAllSetTypes from "../src/db/create-all-set-types";
+import createAllSets from "../src/db/create-all-sets";
+import createAllTraits from "../src/db/create-all-traits";
+import createAllCards from "../src/db/create-all-cards";
+import createAllTypes from "../src/db/create-all-types";
+import createAllTraitsOnCards from "../src/db/create-all-traits-on-cards";
+import createDuplicatedCards from "../src/db/create-duplicated-cards";
+import createAllLinkedCards from "../src/db/create-all-linked-cards";
 
 import { PrismaClient } from "@prisma/client";
 import jsonfile from "jsonfile";
