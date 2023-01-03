@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
 import { v5 as uuidv5 } from "uuid";
 const outputLegalCost = (cost) => {
   if (cost === 0) {

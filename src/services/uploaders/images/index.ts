@@ -1,10 +1,8 @@
 import directoryTree from "directory-tree";
 import { v5 as uuidv5 } from "uuid";
 import { NhostClient } from "@nhost/nhost-js";
-import dotenv from "dotenv";
 import fs from "fs";
 import { exit } from "process";
-dotenv.config();
 
 const tree = directoryTree("./data/images");
 const images = tree.children;

@@ -8,15 +8,19 @@
   },
   "scripts": {
     "build": "rimraf ./build && tsc",
-    "dev": "nodemon src/index.ts",
+    "get:data": "dotenv -e .env.local nodemon src/index.ts",
     "start": "npm run build && node build/index.js",
-    "nhost:upload": "nodemon src/nhost/index.ts"
+    "nhost:up": "nhost up --db-port 7412 ",
+    "db:seed:local": "dotenv -e .env.local prisma generate && dotenv -e .env.local prisma db seed",
+    "db:seed:prod": "dotenv -e .env.prod prisma generate && dotenv -e .env.prod prisma db seed",
+    "upload:images:prod": "dotenv -e .env.prod nodemon src/services/uploaders/images/index.ts",
+    "upload:images:local": "dotenv -e .env.local nodemon src/services/uploaders/images/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@nhost/nhost-js": "^1.12.0",
-    "@prisma/client": "^4.4.0",
+    "@prisma/client": "^4.8.0",
     "@types/node": "^18.11.0",
     "directory-tree": "^3.3.1",
     "dotenv": "^16.0.2",
@@ -31,7 +35,7 @@
     "@typescript-eslint/parser": "^5.40.0",
     "eslint": "^8.25.0",
     "prettier": "2.7.1",
-    "prisma": "^4.4.0",
+    "prisma": "^4.8.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1"
   }

@@ -1,7 +1,8 @@
 node_modules
 dist
 data/**
-.env
+.env.local
+.env.prod
 .nhost
 web/node_modules
 functions/node_modules

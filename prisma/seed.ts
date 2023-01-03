@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import createAllPackTypes from "../src/db/create-all-pack-types";
 import createAllPacks from "../src/db/create-all-packs";
 import createAllFactions from "../src/db/create-all-factions";
@@ -13,8 +12,6 @@ import createAllLinkedCards from "../src/db/create-all-linked-cards";
 
 import { PrismaClient } from "@prisma/client";
 import jsonfile from "jsonfile";
-
-dotenv.config();
 
 const db = new PrismaClient();
 const lang = process?.env?.WANTED_LANG?.toLowerCase() || "EN";

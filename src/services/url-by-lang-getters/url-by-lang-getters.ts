@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 const wantedLang = process.env.WANTED_LANG || "EN";
 const lang = wantedLang.toLowerCase();
 
