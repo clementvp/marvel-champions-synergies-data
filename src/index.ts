@@ -162,7 +162,9 @@ const init = async () => {
   extractTraits();
 
   try {
+    console.log("DOWNLOAD IMAGES THIS MAY TAKE A WHIIIIIIIILE");
     await downloadAllcardImages();
+    console.log("DOWNLOAD IMAGES FINISH");
   } catch (error) {
     console.log(error);
   }

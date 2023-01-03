@@ -76,6 +76,7 @@ model TraitsOnCards {
 model Card {
   code     String @id @unique
   name     String
+  imageId  String?
   quantity Int
   back_link String?
   deck_limit Int?

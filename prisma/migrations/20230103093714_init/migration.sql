@@ -72,6 +72,7 @@ CREATE TABLE "TraitsOnCards" (
 CREATE TABLE "Card" (
     "code" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "imageId" TEXT,
     "quantity" INTEGER NOT NULL,
     "back_link" TEXT,
     "deck_limit" INTEGER,

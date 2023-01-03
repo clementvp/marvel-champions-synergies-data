@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+import { v5 as uuidv5 } from "uuid";
 const outputLegalCost = (cost) => {
   if (cost === 0) {
     return "0";
@@ -20,6 +23,7 @@ const createAllCards = (allCards, db) => {
     const data = {
       code: card.code,
       name: card.name,
+      imageId: uuidv5(card.code, process.env.UUID_NAMESPACE),
       back_link: card.back_link,
       type_code: card.type_code,
       pack_code: card.pack_code,
