@@ -1,0 +1,10 @@
+table:
+  name: TraitsOnCards
+  schema: public
+object_relationships:
+  - name: Card
+    using:
+      foreign_key_constraint_on: card_code
+  - name: Trait
+    using:
+      foreign_key_constraint_on: trait_code

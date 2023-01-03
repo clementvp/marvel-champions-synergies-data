@@ -1,0 +1,11 @@
+table:
+  name: Trait
+  schema: public
+array_relationships:
+  - name: TraitsOnCards
+    using:
+      foreign_key_constraint_on:
+        column: trait_code
+        table:
+          name: TraitsOnCards
+          schema: public

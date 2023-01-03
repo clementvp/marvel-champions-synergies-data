@@ -1,0 +1,15 @@
+table:
+  name: Pack
+  schema: public
+object_relationships:
+  - name: PackType
+    using:
+      foreign_key_constraint_on: type_code
+array_relationships:
+  - name: Cards
+    using:
+      foreign_key_constraint_on:
+        column: pack_code
+        table:
+          name: Card
+          schema: public

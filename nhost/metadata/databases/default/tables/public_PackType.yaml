@@ -1,0 +1,11 @@
+table:
+  name: PackType
+  schema: public
+array_relationships:
+  - name: Packs
+    using:
+      foreign_key_constraint_on:
+        column: type_code
+        table:
+          name: Pack
+          schema: public
