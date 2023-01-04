@@ -14,7 +14,7 @@ import { PrismaClient } from "@prisma/client";
 import jsonfile from "jsonfile";
 
 const db = new PrismaClient();
-const lang = process?.env?.WANTED_LANG?.toLowerCase() || "EN";
+const lang = process?.env?.WANTED_LANG?.toLowerCase() || "en";
 
 const drop = async () => {
   try {
