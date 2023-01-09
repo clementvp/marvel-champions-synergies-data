@@ -1,8 +1,7 @@
 import jsonfile from "jsonfile";
-import { lang } from "../../url-by-lang-getters/url-by-lang-getters";
 
 const transformShieldTrait = () => {
-  const allCards = jsonfile.readFileSync(`./data/${lang}_allCards.json`);
+  const allCards = jsonfile.readFileSync("./data/ORIGINAL/allCards.json");
   const allCardsWithShieldTraitsConverted = allCards.map((card) => {
     if (card.traits) {
       const newTrait = card.traits.replace("S.H.I.E.L.D", "SHIELD");
@@ -11,7 +10,7 @@ const transformShieldTrait = () => {
     return card;
   });
   jsonfile.writeFileSync(
-    `./data/${lang}_allCards.json`,
+    "./data/ORIGINAL/allCards.json",
     allCardsWithShieldTraitsConverted,
     { spaces: 2 }
   );

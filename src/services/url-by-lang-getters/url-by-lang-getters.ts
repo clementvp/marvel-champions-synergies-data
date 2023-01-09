@@ -1,13 +1,23 @@
-const wantedLang = process.env.WANTED_LANG || "EN";
-const lang = wantedLang.toLowerCase();
+const langs = ["KO", "FR", "IT", "ES", "DE", "EN"];
 
-const getPackBaseUrl = () => {
+const getPackBaseUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.PACKS_BASE_URL_FR;
       break;
-
+    case "IT":
+      url = process.env.PACKS_BASE_URL_IT;
+      break;
+    case "DE":
+      url = process.env.PACKS_BASE_URL_DE;
+      break;
+    case "ES":
+      url = process.env.PACKS_BASE_URL_ES;
+      break;
+    case "KO":
+      url = process.env.PACKS_BASE_URL_KO;
+      break;
     default:
       url = process.env.PACKS_BASE_URL;
       break;
@@ -16,24 +26,34 @@ const getPackBaseUrl = () => {
 };
 
 const getAllPacksUrl = () => {
-  let url;
-  switch (wantedLang) {
-    case "FR":
-      url = process.env.ALL_PACKS_URL_FR;
-      break;
-
-    default:
-      url = process.env.ALL_PACKS_URL;
-      break;
-  }
-  return url;
+  const packsUrls = [
+    { lang: "IT", url: process.env.ALL_PACKS_URL_IT },
+    { lang: "FR", url: process.env.ALL_PACKS_URL_FR },
+    { lang: "ES", url: process.env.ALL_PACKS_URL_ES },
+    { lang: "DE", url: process.env.ALL_PACKS_URL_DE },
+    { lang: "KO", url: process.env.ALL_PACKS_URL_KO },
+    { lang: "EN", url: process.env.ALL_PACKS_URL },
+  ];
+  return packsUrls;
 };
 
-const getAllCardTypesUrl = () => {
+const getAllCardTypesUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_CARD_TYPES_URL_FR;
+      break;
+    case "IT":
+      url = process.env.ALL_CARD_TYPES_URL_IT;
+      break;
+    case "ES":
+      url = process.env.ALL_CARD_TYPES_URL_ES;
+      break;
+    case "DE":
+      url = process.env.ALL_CARD_TYPES_URL_DE;
+      break;
+    case "KO":
+      url = process.env.ALL_CARD_TYPES_URL_KO;
       break;
 
     default:
@@ -43,13 +63,24 @@ const getAllCardTypesUrl = () => {
   return url;
 };
 
-const getAllfactionsUrl = () => {
+const getAllfactionsUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_FACTIONS_URL_FR;
       break;
-
+    case "IT":
+      url = process.env.ALL_FACTIONS_URL_IT;
+      break;
+    case "ES":
+      url = process.env.ALL_FACTIONS_URL_ES;
+      break;
+    case "DE":
+      url = process.env.ALL_FACTIONS_URL_DE;
+      break;
+    case "KO":
+      url = process.env.ALL_FACTIONS_URL_KO;
+      break;
     default:
       url = process.env.ALL_FACTIONS_URL;
       break;
@@ -57,13 +88,24 @@ const getAllfactionsUrl = () => {
   return url;
 };
 
-const getAllPackTypesUrl = () => {
+const getAllPackTypesUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_PACK_TYPES_URL_FR;
       break;
-
+    case "IT":
+      url = process.env.ALL_PACK_TYPES_URL_IT;
+      break;
+    case "ES":
+      url = process.env.ALL_PACK_TYPES_URL_ES;
+      break;
+    case "DE":
+      url = process.env.ALL_PACK_TYPES_URL_DE;
+      break;
+    case "KO":
+      url = process.env.ALL_PACK_TYPES_URL_KO;
+      break;
     default:
       url = process.env.ALL_PACK_TYPES_URL;
       break;
@@ -71,11 +113,23 @@ const getAllPackTypesUrl = () => {
   return url;
 };
 
-const getAllSetsUrl = () => {
+const getAllSetsUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_SETS_URL_FR;
+      break;
+    case "IT":
+      url = process.env.ALL_SETS_URL_IT;
+      break;
+    case "ES":
+      url = process.env.ALL_SETS_URL_ES;
+      break;
+    case "DE":
+      url = process.env.ALL_SETS_URL_DE;
+      break;
+    case "KO":
+      url = process.env.ALL_SETS_URL_KO;
       break;
 
     default:
@@ -85,9 +139,9 @@ const getAllSetsUrl = () => {
   return url;
 };
 
-const getAllSetTypesUrl = () => {
+const getAllSetTypesUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_SET_TYPES_URL_FR;
       break;
@@ -99,9 +153,9 @@ const getAllSetTypesUrl = () => {
   return url;
 };
 
-const getAllSubTypesUrl = () => {
+const getAllSubTypesUrl = (lang) => {
   let url;
-  switch (wantedLang) {
+  switch (lang) {
     case "FR":
       url = process.env.ALL_SUBTYPES_URL_FR;
       break;
@@ -114,6 +168,7 @@ const getAllSubTypesUrl = () => {
 };
 
 export {
+  langs,
   getPackBaseUrl,
   getAllCardTypesUrl,
   getAllPackTypesUrl,
@@ -122,5 +177,4 @@ export {
   getAllSubTypesUrl,
   getAllfactionsUrl,
   getAllSetTypesUrl,
-  lang,
 };

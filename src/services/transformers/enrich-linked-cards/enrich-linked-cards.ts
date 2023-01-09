@@ -1,8 +1,7 @@
 import jsonfile from "jsonfile";
-import { lang } from "../../url-by-lang-getters/url-by-lang-getters";
 
 const enrichLinkedCards = () => {
-  const allCards = jsonfile.readFileSync(`./data/${lang}_allCards.json`);
+  const allCards = jsonfile.readFileSync("./data/ORIGINAL/allCards.json");
   const allCardsWithLinkedCards = allCards.map((card) => {
     if (card.code.length >= 6) {
       const cardsLinked = allCards.filter((normalCard) =>
@@ -20,9 +19,11 @@ const enrichLinkedCards = () => {
     return card;
   });
   jsonfile.writeFileSync(
-    `./data/${lang}_allCards.json`,
+    "./data/ORIGINAL/allCards.json",
     allCardsWithLinkedCards,
-    { spaces: 2 }
+    {
+      spaces: 2,
+    }
   );
 };
 export { enrichLinkedCards };

@@ -7,87 +7,159 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://root:root@localhost:3254/mc"
+}
+
+model Lang{
+  id  String @id @unique
+  name String
+  packTypes PackTypeLang[]
+  packs     PackLang[]
+  factions FactionLang[]
+  types        TypeLang[]
+  sets         SetLang[]
+  card         CardLang[]
 }
 
 model PackType {
-  code         String   @id @unique
-  name         String   
+  id           String @id @unique @default(uuid())
+  code         String    
   packs        Pack[]
+  langs        PackTypeLang[]
+
+}
+
+model PackTypeLang {
+  id           String @id @unique @default(uuid())   
+  name         String
+
+  packType     PackType @relation(fields: [packTypeId], references: [id])
+  packTypeId   String
+
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id      String
 }
 
 model Pack {
-  code         String   @id @unique
-  date_release String
-  name         String   
+  id           String @id @unique @default(uuid())
+  code         String
+  date_release String   
   position     Int
   size         Int
 
-  type         PackType @relation(fields: [type_code], references: [code], onDelete: Cascade )
-  type_code    String
+  type       PackType @relation(fields: [type_id], references: [id] )
+  type_id    String
 
   cards Card[]
+  langs PackLang[]
 
+}
+
+model PackLang {
+  id           String @id @unique @default(uuid())
+  name         String
+
+  pack     Pack @relation(fields: [packId], references: [id])
+  packId   String
+
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id       String    
 }
 
 model Faction {
-  code String @id @unique
-  name String
+  id   String @id @unique @default(uuid())
+  code String
   cards Card[]
+  langs FactionLang[]
+}
+
+model FactionLang{
+  id   String @id @unique @default(uuid())
+  name String
+
+  faction     Faction @relation(fields: [factionId], references: [id])
+  factionId String
+
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id       String 
 }
 
 model Type {
-  code String @id @unique
-  name String
+  id   String @id @unique @default(uuid())
+  code String
   cards Card[]
+  langs TypeLang[]
+}
+
+model TypeLang {
+  id   String @id @unique @default(uuid())
+  name String
+
+  type     Type @relation(fields: [typeId], references: [id])
+  typeId String
+  
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id       String
 }
 
 model Trait {
-  code String @id @unique
+  id   String @id @unique @default(uuid())
+  code String
   name String
   cards TraitsOnCards[]
 }
 
 model SetType {
-  code String @id @unique
+  id   String @id @unique @default(uuid())
+  code String
   name String
   sets Set[]
 }
 
 model Set {
-  code String @id @unique
-  name String
-
-  type SetType @relation(fields: [type_code], references: [code] , onDelete: Cascade)
-  type_code String
+  id   String @id @unique @default(uuid())
+  code String
+  
+  type SetType @relation(fields: [type_id], references: [id])
+  type_id String
 
   cards Card[]
+  langs SetLang[]
+}
+
+model SetLang {
+  id   String @id @unique @default(uuid())
+  name String
+
+  set Set @relation(fields: [set_id], references: [id])
+  set_id String
+
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id      String
 }
 
 model TraitsOnCards {
   id          String   @id @default(uuid())
-  trait       Trait?   @relation(fields: [trait_code], references: [code])
-  trait_code  String? 
+  trait       Trait?   @relation(fields: [trait_id], references: [id])
+  trait_id  String? 
 
-  card      Card? @relation(fields: [card_code], references: [code])
-  card_code String?
+  card      Card? @relation(fields: [card_id], references: [id])
+  card_id String?
 }
 
 model Card {
-  code     String @id @unique
-  name     String
+  id          String   @id @default(uuid())
+  code     String 
   imageId  String?
   quantity Int
   back_link String?
   deck_limit Int?
   defense Int?
-  flavor String?
   hand_size Int?
   health Int?
   illustrator String?
   is_unique Boolean?
   position Int?
-  text String?
   thwart Int?
   hidden Boolean?
   recover Int?
@@ -108,8 +180,6 @@ model Card {
   scheme_acceleration Int?
   health_per_hero Boolean?
   stage Int?
-  back_flavor String?
-  back_text String?
   double_sided Boolean?
   escalation_threat Int?
   scheme_crisis Int?
@@ -120,29 +190,47 @@ model Card {
   escalation_threat_fixed Boolean?
   back_name String?
   permanent Boolean?
-  thwart_text String?
-  back_traits String?
   spoiler Int?
   threat_fixed Boolean?
 
-  type        Type? @relation(fields: [type_code], references: [code])
-  type_code   String?
+  type        Type? @relation(fields: [type_id], references: [id])
+  type_id   String?
 
-  pack        Pack? @relation(fields: [pack_code], references: [code])
-  pack_code   String?
+  pack        Pack? @relation(fields: [pack_id], references: [id])
+  pack_id   String?
 
-  set        Set? @relation(fields: [set_code], references: [code])
-  set_code   String?
+  set        Set? @relation(fields: [set_id], references: [id])
+  set_id   String?
 
-  faction        Faction? @relation(fields: [faction_code], references: [code])
-  faction_code   String?
+  faction        Faction? @relation(fields: [faction_id], references: [id])
+  faction_id   String?
 
   traits TraitsOnCards[]
 
   duplicatedOfId String?
-  duplicatedOf   Card?   @relation("duplicate", fields: [duplicatedOfId], references: [code])
+  duplicatedOf   Card?   @relation("duplicate", fields: [duplicatedOfId], references: [id])
   duplicatedBy   Card[]  @relation("duplicate")
 
   linkedTo         Card[] @relation("linkedTo")
   linkedToRelation Card[] @relation("linkedTo")
+
+  langs CardLang[]
+}
+
+model CardLang{
+  id   String @id @unique @default(uuid())
+  name String
+  text String?
+  flavor String?
+  traits String?
+  back_flavor String?
+  back_text String?
+  back_traits String?
+  thwart_text String?
+
+  card         Card @relation(fields: [card_id], references: [id])
+  card_id      String
+
+  lang         Lang @relation(fields: [lang_id], references: [id])
+  lang_id      String
 }

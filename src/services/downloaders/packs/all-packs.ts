@@ -2,17 +2,17 @@ import Downloader from "nodejs-file-downloader";
 import jsonfile from "jsonfile";
 import {
   getPackBaseUrl,
-  lang,
+  langs,
 } from "../../url-by-lang-getters/url-by-lang-getters";
 
 const downloadAllPacks = async () => {
-  const allPacksDefinitionFile = "./data/packs-definition/packs.json";
-  const allPacksData = jsonfile.readFileSync(allPacksDefinitionFile);
-
+  const allPacksData = jsonfile.readFileSync(
+    "./data/ORIGINAL/packs-definition/packs.json"
+  );
   const promArrDownloadAllPacks = allPacksData.map((pack) => {
     const downloader = new Downloader({
       url: `${process.env.PACKS_BASE_URL}${pack.code}.json`,
-      directory: "./data/packs",
+      directory: "./data/ORIGINAL/packs",
       cloneFiles: false,
     });
     return downloader.download();
@@ -21,15 +21,23 @@ const downloadAllPacks = async () => {
 };
 
 const downloadAllTranslationPacks = async () => {
-  const allPacksDefinitionFile = `./data/packs-definition/${lang}_packs.json`;
-  const allPacksData = jsonfile.readFileSync(allPacksDefinitionFile);
+  const allPacksData = jsonfile.readFileSync(
+    "./data/ORIGINAL/packs-definition/packs.json"
+  );
+  const individualPacksdata = [];
 
-  const promArrDownloadAllPacks = allPacksData.map((pack) => {
-    const url = getPackBaseUrl();
+  for (const lang of langs) {
+    for (const pack of allPacksData) {
+      const url = `${getPackBaseUrl(lang)}${pack.code}.json`;
+      individualPacksdata.push({ url, code: pack.code, lang });
+    }
+  }
+
+  const promArrDownloadAllPacks = individualPacksdata.map((data) => {
     const downloader = new Downloader({
-      url: `${url}${pack.code}.json`,
-      directory: "./data/packs",
-      fileName: `${lang}_${pack.code}.json`,
+      url: data.url,
+      directory: `./data/${data.lang}/packs`,
+      fileName: `${data.code}.json`,
       cloneFiles: false,
     });
     return downloader.download();
@@ -38,13 +46,13 @@ const downloadAllTranslationPacks = async () => {
 };
 
 const downloadAllEncounterPacks = async () => {
-  const allPacksDefinitionFile = "./data/packs-definition/packs.json";
-  const allPacksData = jsonfile.readFileSync(allPacksDefinitionFile);
-
+  const allPacksData = jsonfile.readFileSync(
+    "./data/ORIGINAL/packs-definition/packs.json"
+  );
   const promArrDownloadAllPacks = allPacksData.map((pack) => {
     const downloader = new Downloader({
       url: `${process.env.PACKS_BASE_URL}${pack.code}_encounter.json`,
-      directory: "./data/packs",
+      directory: "./data/ORIGINAL/packs",
       cloneFiles: false,
     });
     return downloader.download();
@@ -53,16 +61,23 @@ const downloadAllEncounterPacks = async () => {
 };
 
 const downloadAllTranslationEncounterPacks = async () => {
-  const allPacksDefinitionFile = `./data/packs-definition/${lang}_packs.json`;
-  const allPacksData = jsonfile.readFileSync(allPacksDefinitionFile);
+  const allPacksData = jsonfile.readFileSync(
+    "./data/ORIGINAL/packs-definition/packs.json"
+  );
+  const individualPacksdata = [];
 
-  const promArrDownloadAllPacks = allPacksData.map((pack) => {
-    const url = getPackBaseUrl();
+  for (const lang of langs) {
+    for (const pack of allPacksData) {
+      const url = `${getPackBaseUrl(lang)}${pack.code}_encounter.json`;
+      individualPacksdata.push({ url, code: pack.code, lang });
+    }
+  }
 
+  const promArrDownloadAllPacks = individualPacksdata.map((data) => {
     const downloader = new Downloader({
-      url: `${url}${pack.code}_encounter.json`,
-      directory: "./data/packs",
-      fileName: `${lang}_${pack.code}_encounter.json`,
+      url: data.url,
+      directory: `./data/${data.lang}/packs`,
+      fileName: `${data.code}_encounter.json`,
       cloneFiles: false,
     });
     return downloader.download();

@@ -20,7 +20,7 @@ import {
 } from "./services/downloaders/packs/all-packs";
 import {
   downloadPacksDefinition,
-  downloadTranslationPacksDefinition,
+  downloadTranslatedPacksDefinition,
 } from "./services/downloaders/packs/packs-definition";
 import { downloadAllSetTypes } from "./services/downloaders/set-types/set-types";
 import {
@@ -30,26 +30,22 @@ import {
 
 import { extractTraits } from "./services/extractors/traits/traits";
 import { enrichLinkedCards } from "./services/transformers/enrich-linked-cards/enrich-linked-cards";
-import mergeCardTypes from "./services/transformers/merge-card-types/merge-card-types";
-import mergeFactions from "./services/transformers/merge-factions/merge-factions";
-import mergePackTypes from "./services/transformers/merge-pack-types/merge-pack-types";
-import mergePacksDefinitions from "./services/transformers/merge-packs-definition/merge-packs-definition";
-import { mergePacks } from "./services/transformers/merge-packs/merge-packs";
-import mergeSets from "./services/transformers/merge-sets/merge-sets";
+import mergeOriginalPacks from "./services/transformers/merge-packs/merge-packs";
+import mergeTranslationPacks from "./services/transformers/merge-packs/merge-translation-pack";
 import { transformShieldTrait } from "./services/transformers/shield-trait/shield-trait";
 import { splitCardTraits } from "./services/transformers/split-traits/split-traits";
 
 const init = async () => {
   try {
     await downloadPacksDefinition();
-    await downloadTranslationPacksDefinition();
+    await downloadTranslatedPacksDefinition();
   } catch (error) {
     console.log("Impossible to download pack definitions");
     exit();
   }
 
   try {
-    await await downloadAllPacks();
+    await downloadAllPacks();
   } catch (error) {
     console.log("Impossible to download a pack, this is possibly normal");
   }
@@ -141,17 +137,7 @@ const init = async () => {
     exit();
   }
 
-  mergeSets();
-
-  mergePacksDefinitions();
-
-  mergePackTypes();
-
-  mergeCardTypes();
-
-  mergeFactions();
-
-  mergePacks();
+  mergeOriginalPacks();
 
   enrichLinkedCards();
 
@@ -161,6 +147,9 @@ const init = async () => {
 
   extractTraits();
 
+  mergeTranslationPacks();
+
+  /*
   try {
     console.log("DOWNLOAD IMAGES THIS MAY TAKE A WHIIIIIIIILE");
     await downloadAllcardImages();
@@ -168,5 +157,6 @@ const init = async () => {
   } catch (error) {
     console.log(error);
   }
+  */
 };
 init();
